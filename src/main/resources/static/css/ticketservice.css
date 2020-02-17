@@ -1,0 +1,70 @@
+@charset "ISO-8859-1";
+html,
+body{
+	margin: 0px 0px 0px 0px;
+	height: 100%;
+}
+.header{
+	height:5%;
+	margin-bottom: 4px;
+	}
+div.container{
+  height: 85%;
+  margin-top: 40px;
+}
+.container .row{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.main_body .main_div .btn {
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.main_body .main_div .table{
+	margin: 50px 0px 20px 10px;
+	border-spacing: 5px;
+}
+input.btn.medium {
+	background:yellow
+}
+
+
+.main_body .footer #page_footer {
+	background-color: #002e5f;
+    width: 100%;
+	border-top: 1px solid #738495;
+	display: block;
+	height:5%;
+}
+.main_body .footer #page_footer div{
+	color:white;
+	padding: 0px 0px 1px 1px;
+	text-align: center;
+    font-size: 12px;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 15px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width:600px) {
+  .column {
+    width: 100%;
+  }
+}
+
