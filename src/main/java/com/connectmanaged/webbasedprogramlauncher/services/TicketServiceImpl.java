@@ -32,19 +32,30 @@ public class TicketServiceImpl implements TicketService {
 	 */
 	@Override
 	public String processBatOrShFile(String ticketPriorityName) {
-
-		Process p = null;
+		Process process = null;
 		try {
-			System.out.println("file location :" +propertyReader.getLocation());
-			Runtime run = Runtime.getRuntime();
-			p = run.exec("cmd.exe /c " + propertyReader.getLocation() + " " + ticketPriorityName);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			System.out.println("file location :" + propertyReader.getLocation());
+			switch (propertyReader.getOs()) {
+			case "linux":
+				String[] cmd = { "bash", "-c", "~" + propertyReader.getLocation() + " " + ticketPriorityName };
+				process = Runtime.getRuntime().exec(cmd);
+				break;
+			case "window":
+				process = Runtime.getRuntime()
+						.exec("cmd.exe /c " + propertyReader.getLocation() + " " + ticketPriorityName);
+				break;
+			default:
+				process = Runtime.getRuntime().exec(propertyReader.getLocation() + " " + ticketPriorityName);
+				break;
+			}
+			process.waitFor(); 
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {
 				if (!line.isEmpty())
 					logger.info("here :" + line);
 			}
-			int exitvalue = p.exitValue();
+			int exitvalue = process.exitValue();
 			logger.debug("exitValue: " + exitvalue);
 			if (exitvalue != 0) {
 				logger.info("Not Executed Command via scripting");
@@ -60,7 +71,7 @@ public class TicketServiceImpl implements TicketService {
 		}
 
 		return SUCCESS;
-		//return FAILURE;
+		// return FAILURE;
 	}
 
 }
